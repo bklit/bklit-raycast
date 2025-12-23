@@ -47,8 +47,8 @@
       "required": false,
       "title": "Dashboard URL",
       "description": "Custom dashboard URL (leave blank for production)",
-      "default": "https://app.bklit.co",
-      "placeholder": "https://app.bklit.co"
+      "default": "https://app.bklit.com",
+      "placeholder": "https://app.bklit.com"
     }
   ],
   "dependencies": {

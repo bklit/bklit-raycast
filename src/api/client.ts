@@ -1,7 +1,7 @@
 import { getPreferenceValues } from "@raycast/api";
 import type { ApiResponse, Preferences } from "../types";
 
-const DEFAULT_DASHBOARD_URL = "https://app.bklit.co";
+const DEFAULT_DASHBOARD_URL = "https://app.bklit.com";
 
 export async function fetchTopCountries(): Promise<ApiResponse> {
   const preferences = getPreferenceValues<Preferences>();

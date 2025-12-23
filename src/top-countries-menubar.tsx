@@ -13,7 +13,7 @@ import type { Preferences } from "./types";
 
 export default function Command() {
   const preferences = getPreferenceValues<Preferences>();
-  const dashboardUrl = preferences.dashboardUrl || "https://app.bklit.co";
+  const dashboardUrl = preferences.dashboardUrl || "https://app.bklit.com";
 
   // Fetch data with 5-minute cache
   const { data, isLoading, error, revalidate } = useCachedPromise(
