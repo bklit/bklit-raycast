@@ -271,7 +271,7 @@ export default function Command() {
         metadata={
           <List.Item.Detail.Metadata>
             {referrersData.map((referrer, index) => (
-              <List.Item.Detail.Metadata.TagList key={referrer.referrer} title={`${index + 1} → ${referrer.referrer}`}>
+              <List.Item.Detail.Metadata.TagList key={referrer.referrer} title={`${index + 1} ∙ ${referrer.referrer}`}>
                 <List.Item.Detail.Metadata.TagList.Item
                   key={`${referrer.referrer}-views`}
                   text={formatNumberLong(referrer.views)}
@@ -307,7 +307,7 @@ export default function Command() {
         metadata={
           <List.Item.Detail.Metadata>
             {pagesData.map((page, index) => (
-              <List.Item.Detail.Metadata.TagList key={page.path} title={`${index + 1} → ${page.path}`}>
+              <List.Item.Detail.Metadata.TagList key={page.path} title={`${index + 1} ∙ ${page.path}`}>
                 <List.Item.Detail.Metadata.TagList.Item
                   key={`${page.path}-views`}
                   text={formatNumberLong(page.views)}
