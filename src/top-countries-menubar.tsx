@@ -32,7 +32,7 @@ export default function Command() {
   const menuBarTitle = error
     ? "Error"
     : totalViews > 0
-      ? `${formatNumber(totalViews)} views`
+      ? `${formatNumber(totalViews)}`
       : isLoading
         ? "Loading..."
         : "No data";
