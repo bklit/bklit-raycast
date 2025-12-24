@@ -73,4 +73,3 @@ export interface PageApiResponse {
     endDate: string;
   };
 }
-

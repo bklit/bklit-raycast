@@ -12,7 +12,7 @@ export async function fetchTopCountries(): Promise<ApiResponse> {
     const response = await fetch(endpoint, {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${preferences.apiToken}`,
+        Authorization: `Bearer ${preferences.apiToken}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -57,7 +57,7 @@ export async function fetchDeviceUsage(): Promise<DeviceUsageApiResponse> {
     const response = await fetch(endpoint, {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${preferences.apiToken}`,
+        Authorization: `Bearer ${preferences.apiToken}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -102,7 +102,7 @@ export async function fetchTopReferrers(): Promise<ReferrerApiResponse> {
     const response = await fetch(endpoint, {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${preferences.apiToken}`,
+        Authorization: `Bearer ${preferences.apiToken}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -147,7 +147,7 @@ export async function fetchTopPages(): Promise<PageApiResponse> {
     const response = await fetch(endpoint, {
       method: "POST",
       headers: {
-        "Authorization": `Bearer ${preferences.apiToken}`,
+        Authorization: `Bearer ${preferences.apiToken}`,
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
@@ -182,4 +182,3 @@ export async function fetchTopPages(): Promise<PageApiResponse> {
     };
   }
 }
-

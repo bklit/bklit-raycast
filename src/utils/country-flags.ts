@@ -19,4 +19,3 @@ export function getMenuBarIcon(topCountryCode?: string): string {
   }
   return "📊";
 }
-
