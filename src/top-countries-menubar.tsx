@@ -1,13 +1,7 @@
-import {
-  Icon,
-  MenuBarExtra,
-  open,
-  openExtensionPreferences,
-  getPreferenceValues,
-} from "@raycast/api";
+import { Icon, MenuBarExtra, open, openExtensionPreferences, getPreferenceValues } from "@raycast/api";
 import { useCachedPromise } from "@raycast/utils";
 import { fetchTopCountries } from "./api/client";
-import { getCountryFlag, getMenuBarIcon } from "./utils/country-flags";
+import { getCountryFlag } from "./utils/country-flags";
 import { formatNumber, formatNumberLong } from "./utils/formatters";
 import type { Preferences } from "./types";
 
@@ -28,88 +22,57 @@ export default function Command() {
     {
       initialData: undefined,
       keepPreviousData: true,
-    }
+    },
   );
 
   // Calculate total views
   const totalViews = data?.data?.reduce((sum, country) => sum + country.views, 0) || 0;
-  const topCountry = data?.data?.[0];
 
-  // Menu bar title
-  const menuBarTitle = isLoading
-    ? "Loading..."
-    : error
+  // Menu bar title - don't show "Loading..." if we have cached data
+  const menuBarTitle = error
     ? "Error"
     : totalViews > 0
-    ? formatNumber(totalViews)
-    : "No data";
+      ? `${formatNumber(totalViews)}`
+      : isLoading
+        ? "Loading..."
+        : "No data";
 
-  // Menu bar icon
-  const menuBarIcon = isLoading
-    ? Icon.CircleProgress
-    : error
-    ? Icon.ExclamationMark
-    : getMenuBarIcon(topCountry?.countryCode);
+  const menuBarIcon = { source: "menubar-icon.png" };
 
   return (
     <MenuBarExtra
       icon={menuBarIcon}
       title={menuBarTitle}
-      isLoading={isLoading}
+      isLoading={isLoading && !data}
       tooltip="Bklit Analytics - Last 24 hours"
     >
       {error ? (
         <>
-          <MenuBarExtra.Item
-            title="Failed to load analytics"
-            icon={Icon.ExclamationMark}
-          />
-          <MenuBarExtra.Item
-            title={error.message || "Unknown error"}
-            icon={Icon.Warning}
-          />
+          <MenuBarExtra.Item title="Failed to load analytics" icon={Icon.ExclamationMark} />
+          <MenuBarExtra.Item title={error.message || "Unknown error"} icon={Icon.Warning} />
           <MenuBarExtra.Separator />
-          <MenuBarExtra.Item
-            title="Open Preferences"
-            icon={Icon.Gear}
-            onAction={openExtensionPreferences}
-          />
-          <MenuBarExtra.Item
-            title="Retry"
-            icon={Icon.ArrowClockwise}
-            onAction={revalidate}
-          />
+          <MenuBarExtra.Item title="Open Preferences" icon={Icon.Gear} onAction={openExtensionPreferences} />
+          <MenuBarExtra.Item title="Retry" icon={Icon.ArrowClockwise} onAction={revalidate} />
         </>
       ) : data?.data && data.data.length > 0 ? (
         <>
-          <MenuBarExtra.Section title="Top Countries (24h)">
-            {data.data.map((country, index) => (
+          <MenuBarExtra.Section title={`Top Countries (${formatNumberLong(totalViews)} total pageviews)`}>
+            {data.data.map((country) => (
               <MenuBarExtra.Item
                 key={country.countryCode}
                 icon={getCountryFlag(country.countryCode)}
-                title={`${index + 1}. ${country.country}`}
-                subtitle={`${formatNumberLong(country.views)} views • ${formatNumberLong(country.uniqueVisitors)} visitors`}
+                title={`${country.country} •`}
+                subtitle={`${formatNumberLong(country.views)} pageviews • ${formatNumberLong(country.uniqueVisitors)} visitors`}
               />
             ))}
           </MenuBarExtra.Section>
 
           <MenuBarExtra.Separator />
-
+          <MenuBarExtra.Item
+            title="Open Bklit Dashboard"
+            onAction={() => open(`${dashboardUrl}/projects/${preferences.projectId}`)}
+          />
           <MenuBarExtra.Section>
-            <MenuBarExtra.Item
-              title={`Total: ${formatNumberLong(totalViews)} views`}
-              icon={Icon.BarChart}
-            />
-          </MenuBarExtra.Section>
-
-          <MenuBarExtra.Separator />
-
-          <MenuBarExtra.Section>
-            <MenuBarExtra.Item
-              title="Open Dashboard"
-              icon={Icon.Globe}
-              onAction={() => open(`${dashboardUrl}/projects/${preferences.projectId}`)}
-            />
             <MenuBarExtra.Item
               title="Refresh"
               icon={Icon.ArrowClockwise}
@@ -128,19 +91,10 @@ export default function Command() {
         <>
           <MenuBarExtra.Item title="No data available" icon={Icon.Info} />
           <MenuBarExtra.Separator />
-          <MenuBarExtra.Item
-            title="Open Dashboard"
-            icon={Icon.Globe}
-            onAction={() => open(dashboardUrl)}
-          />
-          <MenuBarExtra.Item
-            title="Refresh"
-            icon={Icon.ArrowClockwise}
-            onAction={revalidate}
-          />
+          <MenuBarExtra.Item title="Open Dashboard" icon={menuBarIcon} onAction={() => open(dashboardUrl)} />
+          <MenuBarExtra.Item title="Refresh" icon={Icon.ArrowClockwise} onAction={revalidate} />
         </>
       )}
     </MenuBarExtra>
   );
 }
-

@@ -1,89 +1,78 @@
 # Bklit Analytics Extension
 
-View your Bklit analytics directly in your macOS menu bar with this Raycast extension.
+Keep track of your website analytics right from your macOS menu bar. See your top countries, pageviews, and visitor stats from the last 24 hours at a glance.
 
 ## Features
 
-- **Real-time Analytics**: View top 5 countries from the last 24 hours
-- **Menu Bar Integration**: Quick access to analytics without opening your browser
-- **Auto-refresh**: Data updates every 5 minutes automatically
-- **Visual Indicators**: Country flags and formatted numbers for easy reading
-- **Quick Actions**: Direct links to your dashboard, refresh, and preferences
+- 📊 **Menu Bar Integration**: View total pageviews directly in your menu bar
+- 🌍 **Top Countries**: See your top 5 countries with flags, views, and unique visitors
+- 🔄 **Auto-refresh**: Data updates every 5 minutes automatically
+- ⚡ **Lightning Fast**: Cached data loads instantly when you click
+- 🎨 **Light & Dark Mode**: Icons adapt to your system theme
 
-## Setup
+## Getting Started
 
-1. Install dependencies:
+### 1. Get Your API Credentials
 
-   ```bash
-   pnpm install
-   ```
+Before using this extension, you'll need API credentials from your Bklit dashboard:
 
-2. Get your API credentials from your Bklit dashboard:
-   - Navigate to **Settings > API Tokens**
-   - Create a new token and assign it to your project
-   - Copy the token (starts with `bk_live_`)
-   - Copy your Project ID from the project settings (starts with `cl`)
+1. Log in to your [Bklit Dashboard](https://app.bklit.com)
+2. Navigate to **Settings > API Tokens**
+3. Click **Create New Token**
+4. Assign the token to your project
+5. Copy the API token (starts with `bk_live_`)
+6. Go to your project settings and copy your **Project ID** (starts with `cl`)
 
-3. Run in development mode:
+### 2. Configure the Extension
 
-   ```bash
-   pnpm dev
-   ```
+After installing the extension:
 
-4. Configure the extension in Raycast:
-   - **API Token**: Your Bklit API token
-   - **Project ID**: Your project ID
-   - **Dashboard URL** (optional): Custom dashboard URL (defaults to `https://app.bklit.co`)
+1. Run **Bklit Analytics** from Raycast
+2. You'll be prompted to enter your credentials:
+   - **API Token**: Paste your Bklit API token
+   - **Project ID**: Paste your project ID
+   - **Dashboard URL** (optional): Leave blank for production or enter your custom URL
+
+That's it! The extension will appear in your menu bar showing your analytics.
 
 ## Usage
 
-Once configured, the extension will appear in your menu bar showing:
+### Menu Bar Display
 
-- Total views count for the last 24 hours
-- Flag of your top country
+The menu bar shows:
+
+- 📈 Total pageviews from the last 24 hours
+- 🎯 Custom Bklit icon (adapts to light/dark mode)
+
+### Dropdown Menu
 
 Click the menu bar icon to see:
 
-- Top 5 countries with views and unique visitors
-- Total views summary
-- Quick links to your dashboard
-- Refresh and preferences options
+- **Top 5 Countries**: Ranked by pageviews with visitor counts
+- **Quick Actions**:
+  - Open your Bklit Dashboard
+  - Refresh data manually
+  - Access preferences
 
 ### Keyboard Shortcuts
 
-- `Cmd + R`: Refresh data
-- `Cmd + ,`: Open preferences
+- `⌘ R` - Refresh data
+- `⌘ ,` - Open preferences
 
-## Development
+## Privacy & Performance
 
-```bash
-# Install dependencies
-pnpm install
+- Your API token is stored securely in Raycast's encrypted preferences
+- Analytics data is cached locally for instant display
+- Updates every 5 minutes in the background (minimal API usage)
+- No data is collected or shared outside of Bklit
 
-# Run in development
-pnpm dev
+## Support
 
-# Lint code
-pnpm lint
+Need help? Have questions?
 
-# Fix linting issues
-pnpm fix-lint
-
-# Build for production
-pnpm build
-```
-
-## Publishing
-
-To publish to the Raycast Store:
-
-```bash
-pnpm run publish
-```
-
-Follow [Raycast's publishing guidelines](https://developers.raycast.com/basics/publish-an-extension) for more details.
+- [Bklit Documentation](https://bklit.com/docs)
+- [Report an Issue](https://github.com/bklit/bklit-raycast-extension/issues)
 
 ## License
 
 MIT
-# bklit-raycast
