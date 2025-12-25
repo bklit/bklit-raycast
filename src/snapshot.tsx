@@ -1,9 +1,19 @@
-import { List, Icon, Color, ActionPanel, Action, openExtensionPreferences, getPreferenceValues } from "@raycast/api";
+import {
+  List,
+  Icon,
+  Color,
+  ActionPanel,
+  Action,
+  openExtensionPreferences,
+  getPreferenceValues,
+  showToast,
+  Toast,
+} from "@raycast/api";
 import { useCachedPromise } from "@raycast/utils";
 import { fetchDeviceUsage, fetchTopCountries, fetchTopReferrers, fetchTopPages } from "./api/client";
 import { formatNumberLong } from "./utils/formatters";
 import type { Preferences } from "./types";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 type AnalyticsSection = "countries" | "device" | "referrers" | "pages";
 
@@ -13,7 +23,11 @@ export default function Command() {
   const [selectedSection, setSelectedSection] = useState<AnalyticsSection>("countries");
 
   // Fetch all data
-  const { data: deviceData, isLoading: deviceLoading } = useCachedPromise(
+  const {
+    data: deviceData,
+    isLoading: deviceLoading,
+    error: deviceError,
+  } = useCachedPromise(
     async () => {
       const result = await fetchDeviceUsage();
       if (!result.success) throw new Error(result.error || "Failed to fetch device data");
@@ -23,7 +37,11 @@ export default function Command() {
     { initialData: undefined, keepPreviousData: true },
   );
 
-  const { data: countriesData, isLoading: countriesLoading } = useCachedPromise(
+  const {
+    data: countriesData,
+    isLoading: countriesLoading,
+    error: countriesError,
+  } = useCachedPromise(
     async () => {
       const result = await fetchTopCountries();
       if (!result.success) throw new Error(result.error || "Failed to fetch countries data");
@@ -33,7 +51,11 @@ export default function Command() {
     { initialData: undefined, keepPreviousData: true },
   );
 
-  const { data: referrersData, isLoading: referrersLoading } = useCachedPromise(
+  const {
+    data: referrersData,
+    isLoading: referrersLoading,
+    error: referrersError,
+  } = useCachedPromise(
     async () => {
       const result = await fetchTopReferrers();
       if (!result.success) throw new Error(result.error || "Failed to fetch referrers data");
@@ -43,7 +65,11 @@ export default function Command() {
     { initialData: undefined, keepPreviousData: true },
   );
 
-  const { data: pagesData, isLoading: pagesLoading } = useCachedPromise(
+  const {
+    data: pagesData,
+    isLoading: pagesLoading,
+    error: pagesError,
+  } = useCachedPromise(
     async () => {
       const result = await fetchTopPages();
       if (!result.success) throw new Error(result.error || "Failed to fetch pages data");
@@ -53,7 +79,52 @@ export default function Command() {
     { initialData: undefined, keepPreviousData: true },
   );
 
-  const isLoading = deviceLoading || countriesLoading || referrersLoading || pagesLoading;
+  // Handle errors with toast notifications
+  useEffect(() => {
+    if (deviceError) {
+      showToast({
+        style: Toast.Style.Failure,
+        title: "Failed to load device data",
+        message: deviceError.message,
+      });
+    }
+  }, [deviceError]);
+
+  useEffect(() => {
+    if (countriesError) {
+      showToast({
+        style: Toast.Style.Failure,
+        title: "Failed to load countries data",
+        message: countriesError.message,
+      });
+    }
+  }, [countriesError]);
+
+  useEffect(() => {
+    if (referrersError) {
+      showToast({
+        style: Toast.Style.Failure,
+        title: "Failed to load referrers data",
+        message: referrersError.message,
+      });
+    }
+  }, [referrersError]);
+
+  useEffect(() => {
+    if (pagesError) {
+      showToast({
+        style: Toast.Style.Failure,
+        title: "Failed to load pages data",
+        message: pagesError.message,
+      });
+    }
+  }, [pagesError]);
+
+  const isLoading =
+    (selectedSection === "device" && deviceLoading) ||
+    (selectedSection === "countries" && countriesLoading) ||
+    (selectedSection === "referrers" && referrersLoading) ||
+    (selectedSection === "pages" && pagesLoading);
 
   // Brand chart colors
   const CHART_COLORS = {
@@ -161,6 +232,10 @@ export default function Command() {
 
   // Render Device Usage detail
   const renderDeviceDetail = () => {
+    if (deviceLoading) {
+      return <List.Item.Detail markdown="Loading device data..." />;
+    }
+
     if (!deviceData) {
       return <List.Item.Detail markdown="No device data available" />;
     }
@@ -220,6 +295,10 @@ export default function Command() {
 
   // Render Countries detail
   const renderCountriesDetail = () => {
+    if (countriesLoading) {
+      return <List.Item.Detail markdown="Loading countries data..." />;
+    }
+
     if (!countriesData || countriesData.length === 0) {
       return <List.Item.Detail markdown="No countries data available" />;
     }
@@ -256,6 +335,10 @@ export default function Command() {
 
   // Render Referrers detail
   const renderReferrersDetail = () => {
+    if (referrersLoading) {
+      return <List.Item.Detail markdown="Loading referrers data..." />;
+    }
+
     if (!referrersData || referrersData.length === 0) {
       return <List.Item.Detail markdown="No referrers data available" />;
     }
@@ -292,6 +375,10 @@ export default function Command() {
 
   // Render Pages detail
   const renderPagesDetail = () => {
+    if (pagesLoading) {
+      return <List.Item.Detail markdown="Loading pages data..." />;
+    }
+
     if (!pagesData || pagesData.length === 0) {
       return <List.Item.Detail markdown="No pages data available" />;
     }
