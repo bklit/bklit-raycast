@@ -214,7 +214,7 @@ export default function Command() {
             },
           },
           datalabels: {
-            color: "#fff",
+            color: "#1e1e1e",
             font: { size: 18, weight: "bold" },
             formatter: (value: number, context: { dataset: { data: number[] } }) => {
               const total = context.dataset.data.reduce((a: number, b: number) => a + b, 0);
