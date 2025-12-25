@@ -1,5 +1,14 @@
-import { Icon, MenuBarExtra, open, openExtensionPreferences, getPreferenceValues } from "@raycast/api";
+import {
+  Icon,
+  MenuBarExtra,
+  open,
+  openExtensionPreferences,
+  getPreferenceValues,
+  showToast,
+  Toast,
+} from "@raycast/api";
 import { useCachedPromise } from "@raycast/utils";
+import { useEffect } from "react";
 import { fetchTopCountries } from "./api/client";
 import { getCountryFlag } from "./utils/country-flags";
 import { formatNumber, formatNumberLong } from "./utils/formatters";
@@ -24,6 +33,17 @@ export default function Command() {
       keepPreviousData: true,
     },
   );
+
+  // Show toast notification for errors
+  useEffect(() => {
+    if (error) {
+      showToast({
+        style: Toast.Style.Failure,
+        title: "Failed to load analytics",
+        message: error.message || "Network error",
+      });
+    }
+  }, [error]);
 
   // Calculate total views
   const totalViews = data?.data?.reduce((sum, country) => sum + country.views, 0) || 0;
