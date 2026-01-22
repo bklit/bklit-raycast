@@ -88,7 +88,9 @@ export default function Command() {
           icon={Icon.ExclamationMark}
           title="Failed to Load Data"
           description={error?.message || "Unable to load analytics data. Please check your API key and project ID."}
-          actions={<CommonActions dashboardUrl={dashboardUrl} projectId={preferences.projectId} onRefresh={revalidate} />}
+          actions={
+            <CommonActions dashboardUrl={dashboardUrl} projectId={preferences.projectId} onRefresh={revalidate} />
+          }
         />
       </List>
     );
@@ -103,7 +105,9 @@ export default function Command() {
           icon={Icon.BarChart}
           title="No Data Available"
           description="No analytics data found. Make sure your project has collected some data."
-          actions={<CommonActions dashboardUrl={dashboardUrl} projectId={preferences.projectId} onRefresh={revalidate} />}
+          actions={
+            <CommonActions dashboardUrl={dashboardUrl} projectId={preferences.projectId} onRefresh={revalidate} />
+          }
         />
       </List>
     );
@@ -125,7 +129,9 @@ export default function Command() {
             countriesData && countriesData.length > 0 ? [{ text: `${countriesData.length} countries` }] : undefined
           }
           detail={<CountriesDetail data={countriesData} isLoading={isLoading} />}
-          actions={<CommonActions dashboardUrl={dashboardUrl} projectId={preferences.projectId} onRefresh={revalidate} />}
+          actions={
+            <CommonActions dashboardUrl={dashboardUrl} projectId={preferences.projectId} onRefresh={revalidate} />
+          }
         />
 
         <List.Item
@@ -142,7 +148,9 @@ export default function Command() {
               : undefined
           }
           detail={<DeviceUsageDetail data={deviceResult} isLoading={isLoading} />}
-          actions={<CommonActions dashboardUrl={dashboardUrl} projectId={preferences.projectId} onRefresh={revalidate} />}
+          actions={
+            <CommonActions dashboardUrl={dashboardUrl} projectId={preferences.projectId} onRefresh={revalidate} />
+          }
         />
 
         <List.Item
@@ -153,7 +161,9 @@ export default function Command() {
             referrersData && referrersData.length > 0 ? [{ text: `${referrersData.length} sources` }] : undefined
           }
           detail={<ReferrersDetail data={referrersData} isLoading={isLoading} />}
-          actions={<CommonActions dashboardUrl={dashboardUrl} projectId={preferences.projectId} onRefresh={revalidate} />}
+          actions={
+            <CommonActions dashboardUrl={dashboardUrl} projectId={preferences.projectId} onRefresh={revalidate} />
+          }
         />
 
         <List.Item
@@ -162,7 +172,9 @@ export default function Command() {
           icon={Icon.Document}
           accessories={pagesData && pagesData.length > 0 ? [{ text: `${pagesData.length} pages` }] : undefined}
           detail={<PagesDetail data={pagesData} isLoading={isLoading} />}
-          actions={<CommonActions dashboardUrl={dashboardUrl} projectId={preferences.projectId} onRefresh={revalidate} />}
+          actions={
+            <CommonActions dashboardUrl={dashboardUrl} projectId={preferences.projectId} onRefresh={revalidate} />
+          }
         />
       </>
     </List>
