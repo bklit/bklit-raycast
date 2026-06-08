@@ -1,3 +1,6 @@
+> [!CAUTION]
+> **This extension is deprecated and no longer maintained.** Bklit is no longer an analytics platform — [bklit.com](https://bklit.com) is now **Bklit UI**, a library of charts and data visualization components. This Raycast extension will not receive future updates and may stop working at any time.
+
 # Bklit Analytics Extension
 
 Keep track of your website analytics right from your macOS menu bar. View comprehensive analytics including top countries, device usage, top pages, referrers, and more - all from the last 24 hours.
